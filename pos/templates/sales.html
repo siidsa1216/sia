@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}BevRecs | Inventory {% endblock%}
+
+{% block content %}
+  <div class="pagetitle">
+    <h1>Sales</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/templates/index.html">Home</a></li>
+        <li class="breadcrumb-item active">Sales</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+  <section class="section dashboard">
+    <div class="row">
+
+      <!-- Left side columns -->
+      <div class="col-lg-12 mb-2">
+        <div class="row g-2">
+            <!-- Top Selling -->
+           <div class="col-12">
+            <div class="card top-selling overflow-auto">
+
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded'></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+
+              <div class="card-body pb-0">
+                <h5 class="card-title">Sales</h5>
+
+                <table class="table rounded table-striped table-warning" id="salesTable">
+                  <thead>
+                    <tr>
+                      <th scope="col">Order No.</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">Beverage</th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">Size</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Addons</th>
+                      <th scope="col">Addons Total</th>
+                      <th scope="col">Payment Method</th>
+                      <th scope="col">Total</th>
+
+                    </tr>
+                  </thead>
+                 
+                  <tbody>
+                    {% for sale in buyitem %}
+                    {% if sale.buyOrBought == True %}
+                    {% if sale.DoneOrder == True%}
+                    <tr>
+                        <td>{{ sale.orderNumber }}</td>
+                        <td>{{ sale.dateordered.date }}</td>
+                        <td><a href="#" class="text-primary fw-bold">{{ sale.buyName }}</a></td>
+                        <td>{{ sale.buyQuantityMenu }}</td>
+                        <td>{{ sale.buySize }}</td>
+                        <td>{{ sale.buyPrice }}</td>
+                        <td>
+                            {% if sale.buyAddOns1 %}{{ sale.buyAddOns1 }}<br>{% endif %}
+                            {% if sale.buyAddOns2 %}{{ sale.buyAddOns2 }}<br>{% endif %}
+                            {% if sale.buyAddOns3 %}{{ sale.buyAddOns3 }}<br>{% endif %}
+                            {% if sale.buyAddOns4 %}{{ sale.buyAddOns4 }}<br>{% endif %}
+                            {% if sale.buyAddOns5 %}{{ sale.buyAddOns5 }}<br>{% endif %}
+                            {% if not sale.buyAddOns1 and not sale.buyAddOns2 and not sale.buyAddOns3 and not sale.buyAddOns4 and not sale.buyAddOns5 %}
+                                None
+                            {% endif %}
+                        </td>
+                        <td><br>{{ sale.total_AO }}</td>
+                        <td>{{ sale.payment_method }}</td>
+                        <td>{{ sale.AllPayment }}</td>
+                    </tr>
+                    {%endif%}
+                    {%endif%}
+                    {% endfor %}
+                </tbody>
+                
+                
+                </table>
+
+              </div>
+
+            </div>
+          </div><!-- End Top Selling -->
+
+        </div>
+      </div>
+      </div>
+    </section>
+    {% endblock content %}
